@@ -4,6 +4,6 @@ import { Controller, Get } from '@nestjs/common';
 export class DummyController {
   @Get('/')
   getOne() {
-    return 'test';
+    // return 'test';
   }
 }
