@@ -5,6 +5,11 @@ import { User } from './user.entity';
 export class UsersService {
   private readonly users: Array<User> = [];
 
+  constructor() {
+    const u: User = { id: 1, name: 'cho', password: '123' };
+    this.users.push(u);
+  }
+
   createUser(name: string): User {
     const user = new User();
     user.name = name;
