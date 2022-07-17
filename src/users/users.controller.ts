@@ -1,5 +1,6 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { CreateUserDto } from './create-user.dto';
+import { UserDto } from './user.dto';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 
@@ -9,14 +10,21 @@ export class UsersController {
 
   @Post('/')
   @HttpCode(204)
-  create(@Body() name: string): CreateUserDto {
-    const createdUser: User = this.userService.createUser(name);
+  async create(@Body() userDto: UserDto) {
+    const createdUser = await this.userService.createUser(userDto);
+    console.log(createdUser);
+    // return createdUser;
+  }
 
-    return { name: createdUser.name };
+  @Get('/all')
+  async findAll(): Promise<UserDto[] | void> {
+    const users = await this.userService.findAll();
+    return users;
   }
 
   @Get('/')
-  getOne() {
-    return 'user';
+  async findOne(@Query() id: number): Promise<UserDto | void> {
+    const user = await this.userService.findOne(id);
+    return user;
   }
 }
